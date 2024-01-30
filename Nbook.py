@@ -75,3 +75,5 @@ class NoteManager:
     def get_all_notes(self):
         return self.notes
     manager = NoteManager('notes.json')
+    
+    while True:
