@@ -13,7 +13,8 @@ class NoteManager:
     def __init__(self, file_name):
         self.file_name = file_name
         self.notes = self.load_notes()
-        def load_notes(self):
+        
+    def load_notes(self):
         try:
             with open(self.file_name, 'r') as file:
                 data = json.load(file)
@@ -74,14 +75,51 @@ class NoteManager:
 
     def get_all_notes(self):
         return self.notes
-    manager = NoteManager('notes.json')
     
-    while True:
-        print('1. Создать заметку')
+manager = NoteManager('notes.json')
+    
+while True:
+    print('1. Создать заметку')
     print('2. Редактировать заметку')
     print('3. Удалить заметку')
     print('4. Вывести список заметок')
     print('5. Вывести выбранную заметку')
     print('0. Выход')
     choice = input('Выберите действие: ')
-    
+    if choice == '1':
+        title = input('Введите заголовок заметки: ')
+        body = input('Введите текст заметки: ')
+        manager.add_note(title, body)
+        print('Заметка успешно добавлена.')
+    elif choice == '2':
+        note_id = int(input('Введите ID заметки: '))
+        title = input('Введите новый заголовок заметки: ')
+        body = input('Введите новый текст заметки: ')
+        if manager.edit_note(note_id, title, body):
+            print('Заметка успешно отредактирована.')
+        else:
+            print('Заметка с таким ID не найдена.')
+    elif choice == '3':
+        note_id = int(input('Введите ID заметки: '))
+        if manager.delete_note(note_id):
+            print('Заметка успешно удалена.')
+        else:
+            print('Заметка с таким ID не найдена.')
+    elif choice == '4':
+        notes = manager.get_all_notes()
+        if len(notes) > 0:
+            for note in notes:
+                print(f'ID: {note.note_id}, Заголовок: {note.title}, Дата создания: {note.created_at}')
+        else:
+            print('Список заметок пуст.')
+    elif choice == '5':
+        note_id = int(input('Введите ID заметки: '))
+        note = manager.get_note_by_id(note_id)
+        if note:
+            print(f'Заголовок: {note.title}\nТекст: {note.body}\nДата создания: {note.created_at}\nДата изменения: {note.updated_at}')
+        else:
+            print('Заметка с таким ID не найдена.')
+    elif choice == '0':
+        break
+    else:
+        print('Неверный выбор. Попробуйте еще раз.')
