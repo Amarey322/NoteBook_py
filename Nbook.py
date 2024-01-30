@@ -77,3 +77,11 @@ class NoteManager:
     manager = NoteManager('notes.json')
     
     while True:
+        print('1. Создать заметку')
+    print('2. Редактировать заметку')
+    print('3. Удалить заметку')
+    print('4. Вывести список заметок')
+    print('5. Вывести выбранную заметку')
+    print('0. Выход')
+    choice = input('Выберите действие: ')
+    
